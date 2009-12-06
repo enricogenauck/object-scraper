@@ -1,1 +1,26 @@
-= object-scraper
+= Object Scraper
+
+== Description
+
+Object scraper is a thin wrapper for hpricot to enable receipt-like
+extraction of ruby objects from various web sites.
+
+== Example
+
+  class Entry < Object
+    attr_accessor :text, :date
+  end
+  
+  uri     = "http://twitter.com/twitter"
+  pattern = ".status"
+
+  Scraper.define(:twitter, :class => :entry, :source => uri, :node => pattern) do |s|
+    s.text { |node| node.at(".entry-content").inner_html }
+    s.date { |node| DateTime.parse(node.at(".timestamp")[:data][/\'.*\'/].gsub("'", "")) }
+  end
+
+  @objects = Scraper.parse(:twitter)
+
+== Author
+
+- Maintained by {Enrico Genauck}[mailto:kontakt@enricogenauck.de]

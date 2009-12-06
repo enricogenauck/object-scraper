@@ -1,33 +1,33 @@
 class Scraper
-  
+
   # Raised when a scraper is defined with the same name as a previously-defined scraper.
   class DuplicateDefinitionError < RuntimeError
   end
-  
+
   class << self
     attr_accessor :scrapers
- 
+
     # An Array of strings specifying locations that should be searched for
     # scraper definitions. By default, object-scraper will attempt to require
     # "scrapers"
     attr_accessor :definition_file_paths
   end
-  
+
   self.scrapers = {}
   self.definition_file_paths = %w(scrapers)
-  
+
   attr_reader :scraper_source, :scraper_node
-    
+
   def self.define(name, options = {}, &block)
     instance = Scraper.new(name, options, &block)
-    
+
     if self.scrapers[name] 
       raise DuplicateDefinitionError, "Scraper already defined: #{name}"
     end
-    
+
     self.scrapers[name] = instance
   end
-  
+
   def initialize(name, options = {}, &block) #:nodoc:
     assert_valid_options(options)
     @objects  = []
@@ -36,16 +36,16 @@ class Scraper
     @scraper_node     = options[:node]
     @block    = block
   end
-  
+
   def self.extract(name)
     scraper_by_name(name)
   end
-  
-  def self.run(name)
-    scraper_by_name(name).run
+
+  def self.parse(name)
+    scraper_by_name(name).parse
   end
-  
-  def run
+
+  def parse
     doc = open(@scraper_source) { |f| Hpricot(f) }
     doc.search(@scraper_node).each do |n|
       @current_node   = n
@@ -55,11 +55,11 @@ class Scraper
     end
     @objects
   end
-  
+
   def self.scraper_by_name(name)
     scrapers[name.to_sym] or raise ArgumentError, "No such scraper: #{name.to_s}"
   end
-  
+
   def method_missing(symbol, *args, &block)
     if block_given?
       @current_object.send("#{symbol}=", yield(@current_node))
@@ -67,10 +67,10 @@ class Scraper
       @current_object.send("#{symbol}=", args.first)
     end
   end
-  
+
   private
-  
-  def class_for (class_or_to_s)
+
+  def class_for(class_or_to_s)
    if class_or_to_s.respond_to?(:to_sym)
      Object.const_get(variable_name_to_class_name(class_or_to_s))
    else
@@ -85,7 +85,7 @@ class Scraper
       class_name_to_variable_name(class_or_to_s).to_sym
     end
   end
-  
+
   def class_name_to_variable_name(name)
     name.to_s.gsub(/::/, '/').
       gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
@@ -93,13 +93,13 @@ class Scraper
       tr("-", "_").
       downcase
   end
-  
+
   def variable_name_to_class_name(name)
     name.to_s.
       gsub(/\/(.?)/) { "::#{$1.upcase}" }.
       gsub(/(?:^|_)(.)/) { $1.upcase }
   end
-  
+
   def assert_valid_options(options)
     invalid_keys = options.keys - [:class, :source, :node] 
     unless invalid_keys == []
