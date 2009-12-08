@@ -31,7 +31,7 @@ describe Scraper do
     it "should get the objects from twitter" do
       Scraper.define(:twitter, :class => :entry, :source => @uri, :node => @pattern) do |s|
         s.text { |node| node.at(".entry-content").inner_html }
-        s.date { |node| DateTime.parse(node.at(".timestamp")[:data][/\'.*\'/].gsub("'", "")) }
+        s.date { |node| DateTime.parse(node.at(".timestamp")[:data][/\'.*\'/].delete("'")) }
       end
       
       @objects = Scraper.parse(:twitter)
