@@ -6,15 +6,11 @@ class Scraper
 
   class << self
     attr_accessor :scrapers
-
-    # An Array of strings specifying locations that should be searched for
-    # scraper definitions. By default, object-scraper will attempt to require
-    # "scrapers"
-    attr_accessor :definition_file_paths
+    attr_accessor :scrape_source_with
   end
 
   self.scrapers = {}
-  self.definition_file_paths = %w(scrapers)
+  self.scrape_source_with = Proc.new { |source| Hpricot(source) }
 
   attr_reader :scraper_source, :scraper_node
 
@@ -46,7 +42,7 @@ class Scraper
   end
 
   def parse
-    doc = open(@scraper_source) { |f| Hpricot(f) }
+    doc = open(@scraper_source) { |f| Scraper.scrape_source_with.call(f) }
     doc.search(@scraper_node).each do |n|
       @current_node   = n
       @current_object = @class.new

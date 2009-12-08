@@ -21,6 +21,18 @@ extraction of ruby objects from various web sites.
 
   @objects = Scraper.parse(:twitter)
 
+== Advanced Example
+
+It is possible to use other existing HTML parsers instead of hpricot.
+Just overwrite the according proc object.
+
+  require 'nokogiri'
+  Scraper.scrape_source_with = Proc.new { |source| Nokogiri::HTML(source) }
+  
+  Scraper.define(:twitter, :class => :entry, :source => uri, :node => pattern) do |s|
+    # initialize your objects here accordingly
+  end
+  
 == Author
 
 - Maintained by {Enrico Genauck}[mailto:kontakt@enricogenauck.de]
