@@ -7,16 +7,16 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Enrico Genauck"]
   s.date = %q{2009-12-10}
-  s.description = %q{Object scraper is a thin wrapper for hpricot to enable receipt-like extraction of ruby objects from various web sites.}
+  s.description = %q{Object scraper is a thin wrapper for hpricot to enable recipe-like extraction of ruby objects from various web sites.}
   s.email = %q{kontakt@enricogenauck.de}
   s.extra_rdoc_files = ["README.rdoc", "lib/object-scraper.rb", "lib/object-scraper/scraper.rb"]
-  s.files = ["Manifest", "README.rdoc", "Rakefile", "lib/object-scraper.rb", "lib/object-scraper/scraper.rb", "spec/data/twitter.html", "spec/object-scraper/scraper_spec.rb", "spec/spec.opts", "spec/spec_helper.rb", "object-scraper.gemspec"]
+  s.files = ["Manifest", "README.rdoc", "Rakefile", "lib/object-scraper.rb", "lib/object-scraper/scraper.rb", "object-scraper.gemspec", "spec/data/twitter.html", "spec/object-scraper/scraper_spec.rb", "spec/spec.opts", "spec/spec_helper.rb"]
   s.homepage = %q{http://github.com/enricogenauck/object-scraper}
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Object-scraper", "--main", "README.rdoc"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{object-scraper}
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{Receipt like object extraction from HTML sources}
+  s.summary = %q{Recipe like object extraction from HTML sources}
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION

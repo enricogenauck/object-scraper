@@ -3,8 +3,8 @@ require 'rake'
 require 'echoe'
 
 Echoe.new('object-scraper', '0.0.2') do |p|
-  p.summary         = "Receipt like object extraction from HTML sources"
-  p.description     = "Object scraper is a thin wrapper for hpricot to enable receipt-like extraction of ruby objects from various web sites."
+  p.summary         = "Recipe like object extraction from HTML sources"
+  p.description     = "Object scraper is a thin wrapper for hpricot to enable recipe-like extraction of ruby objects from various web sites."
   p.url             = "http://github.com/enricogenauck/object-scraper"
   p.author          = "Enrico Genauck"
   p.email           = "kontakt@enricogenauck.de"
