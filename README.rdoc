@@ -5,6 +5,16 @@
 Object scraper is a thin wrapper for hpricot to enable receipt-like
 extraction of ruby objects from various web sites.
 
+== Install
+
+=== Gem
+
+  gem install object-scraper --source http://gemcutter.org
+
+=== Rails
+
+  config.gem 'object-scraper', :source => 'http://gemcutter.org'
+
 == Example
 
   class Entry < Object
@@ -32,7 +42,12 @@ Just overwrite the according proc object.
   Scraper.define(:twitter, :class => :entry, :source => uri, :node => pattern) do |s|
     # initialize your objects here accordingly
   end
-  
+
+== Rails
+
+All scraper definitions sitting in RAILS_ROOT/scrapers will be taken into account
+automatically when you use object-scraper as a gem in your rails project.
+
 == Author
 
 - Maintained by {Enrico Genauck}[mailto:kontakt@enricogenauck.de]

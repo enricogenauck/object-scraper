@@ -7,10 +7,12 @@ class Scraper
   class << self
     attr_accessor :scrapers
     attr_accessor :scrape_source_with
+    attr_accessor :definition_file_paths
   end
 
   self.scrapers = {}
   self.scrape_source_with = Proc.new { |source| Hpricot(source) }
+  self.definition_file_paths = %w(scrapers)
 
   attr_reader :scraper_source, :scraper_node
 
@@ -33,7 +35,7 @@ class Scraper
     @block    = block
   end
 
-  def self.extract(name)
+  def self.get(name)
     scraper_by_name(name)
   end
 
@@ -61,6 +63,18 @@ class Scraper
       @current_object.send("#{symbol}=", yield(@current_node))
     else
       @current_object.send("#{symbol}=", args.first)
+    end
+  end
+  
+  def self.find_definitions
+    definition_file_paths.each do |path|
+      require("#{path}.rb") if File.exists?("#{path}.rb")
+
+      if File.directory? path
+        Dir[File.join(path, '*.rb')].each do |file|
+          require file
+        end
+      end
     end
   end
 
