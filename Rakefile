@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rake'
 require 'echoe'
 
-Echoe.new('object-scraper', '0.0.2') do |p|
+Echoe.new('object-scraper', '0.0.3') do |p|
   p.summary         = "Recipe like object extraction from HTML sources"
   p.description     = "Object scraper is a thin wrapper for hpricot to enable recipe-like extraction of ruby objects from various web sites."
   p.url             = "http://github.com/enricogenauck/object-scraper"

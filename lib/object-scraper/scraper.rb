@@ -42,6 +42,12 @@ class Scraper
   def self.parse(name)
     scraper_by_name(name).parse
   end
+  
+  def self.parse_all
+    objects = []
+    scrapers.each_value { |s| objects << s.parse }
+    objects.flatten
+  end
 
   def parse
     doc = open(@scraper_source) { |f| Scraper.scrape_source_with.call(f) }

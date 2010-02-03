@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{object-scraper}
-  s.version = "0.0.2"
+  s.version = "0.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Enrico Genauck"]
-  s.date = %q{2009-12-10}
+  s.date = %q{2010-02-03}
   s.description = %q{Object scraper is a thin wrapper for hpricot to enable recipe-like extraction of ruby objects from various web sites.}
   s.email = %q{kontakt@enricogenauck.de}
   s.extra_rdoc_files = ["README.rdoc", "lib/object-scraper.rb", "lib/object-scraper/scraper.rb"]

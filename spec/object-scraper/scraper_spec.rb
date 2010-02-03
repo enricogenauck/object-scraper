@@ -43,6 +43,22 @@ describe Scraper do
       @objects.first.date.should == DateTime.parse("Mon Nov 30 04:10:51 +0000 2009")
     end
     
+    it "should get the objects from multiple scrapers" do
+      Scraper.define(:twitter_1, :class => :entry, :source => @uri, :node => @pattern) do |s|
+        s.text { |node| node.at(".entry-content").inner_html }
+        s.date { |node| DateTime.parse(node.at(".timestamp")[:data][/\'.*\'/].delete("'")) }
+      end
+      
+      Scraper.define(:twitter_2, :class => :entry, :source => @uri, :node => @pattern) do |s|
+        s.text { |node| node.at(".entry-content").inner_html }
+        s.date { |node| DateTime.parse(node.at(".timestamp")[:data][/\'.*\'/].delete("'")) }
+      end
+      
+      
+      @objects = Scraper.parse_all
+      @objects.size.should == 40
+    end
+    
     it "should use a different html parser" do
       require 'nokogiri'
       Scraper.scrape_source_with = Proc.new { |source| Nokogiri::HTML(source) }
