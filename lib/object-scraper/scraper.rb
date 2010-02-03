@@ -66,7 +66,11 @@ class Scraper
 
   def method_missing(symbol, *args, &block)
     if block_given?
-      @current_object.send("#{symbol}=", yield(@current_node))
+      @current_object.send("#{symbol}=",  begin
+                                            yield(@current_node)
+                                          rescue
+                                            puts "Warning, parsing failed at #{@current_node.inspect}"
+                                          end)
     else
       @current_object.send("#{symbol}=", args.first)
     end

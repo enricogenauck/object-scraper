@@ -3,6 +3,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', 'spec_helper'))
 describe Scraper do
   before :all do
     @uri     = File.expand_path(File.join(File.dirname(__FILE__), '..', 'data', 'twitter.html' ))
+    @faulty_source = File.expand_path(File.join(File.dirname(__FILE__), '..', 'data', 'incomplete_objects.html' ))
     @pattern = ".status"
     class Entry < Object
       attr_accessor :text, :date
@@ -72,6 +73,17 @@ describe Scraper do
       @objects.size.should == 20
       @objects.first.text.should == "SMS delivery issues on AT&amp;T <a href=\"http://bit.ly/7JFJ6H\" class=\"tweet-url web\" rel=\"nofollow\" target=\"_blank\">http://bit.ly/7JFJ6H</a>"
       @objects.first.date.should == DateTime.parse("Mon Nov 30 04:10:51 +0000 2009")
+    end
+    
+    it "should get the objects despite of parse errors" do
+      Scraper.define(:errors, :class => :entry, :source => @faulty_source, :node => @pattern) do |s|
+        s.text { |node| node.at("h1").inner_html }
+        s.date { |node| node.at("p").inner_html }
+      end
+      
+      @objects = Scraper.parse(:errors)
+      @objects[0].date.should == "content"
+      @objects[1].date.should  be_nil
     end
     
   end

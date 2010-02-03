@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{object-scraper}
-  s.version = "0.0.3"
+  s.version = "0.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Enrico Genauck"]
@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.description = %q{Object scraper is a thin wrapper for hpricot to enable recipe-like extraction of ruby objects from various web sites.}
   s.email = %q{kontakt@enricogenauck.de}
   s.extra_rdoc_files = ["README.rdoc", "lib/object-scraper.rb", "lib/object-scraper/scraper.rb"]
-  s.files = ["Manifest", "README.rdoc", "Rakefile", "lib/object-scraper.rb", "lib/object-scraper/scraper.rb", "object-scraper.gemspec", "spec/data/twitter.html", "spec/object-scraper/scraper_spec.rb", "spec/spec.opts", "spec/spec_helper.rb"]
+  s.files = ["Manifest", "README.rdoc", "Rakefile", "lib/object-scraper.rb", "lib/object-scraper/scraper.rb", "spec/data/incomplete_objects.html", "spec/data/twitter.html", "spec/object-scraper/scraper_spec.rb", "spec/spec.opts", "spec/spec_helper.rb", "object-scraper.gemspec"]
   s.homepage = %q{http://github.com/enricogenauck/object-scraper}
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Object-scraper", "--main", "README.rdoc"]
   s.require_paths = ["lib"]
